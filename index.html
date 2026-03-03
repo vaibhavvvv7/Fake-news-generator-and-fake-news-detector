@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credible News </title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: rgba(99, 102, 241, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #10b981;
+            /* Emerald Green */
+            --secondary: #3b82f6;
+            /* Blue */
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15), transparent 40%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        @media(min-width: 800px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0.8;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card h2 {
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            color: white;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 150px;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        button {
+            width: 100%;
+            padding: 1.25rem;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        button:hover {
+            opacity: 0.95;
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            min-height: 100px;
+            display: none;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            color: #cbd5e1;
+        }
+
+        .result-box.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-btn {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .contact-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .about-btn:hover,
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        @media(max-width: 768px) {
+            .about-btn {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .contact-btn {
+                top: 1rem;
+                right: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .header {
+                margin-top: 4rem;
+            }
+        }
+
+        .loader {
+            display: none;
+            width: 26px;
+            height: 26px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Highlight classes */
+        .fake-label {
+            color: var(--danger);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .real-label {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .error-msg {
+            color: var(--danger);
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="/about" class="about-btn">
+        ℹ️ About
+    </a>
+
+    <a href="/contact" class="contact-btn">
+        ✉️ Contact
+    </a>
+
+    <div class="header">
+        <h1>Credible News</h1>
+        <p>Harness the power of GPT-2 and BERT</p>
+    </div>
+
+    <div class="container">
+        <!-- Generator Card -->
+        <div class="card">
+            <h2>✨ Generate Fiction</h2>
+            <div class="form-group">
+                <textarea id="promptInput"
+                    placeholder="A mysterious object was spotted in the sky over New York today..."></textarea>
+            </div>
+            <button id="generateBtn" onclick="generateNews()">
+                <span id="genBtnText">Generate Story</span>
+                <div class="loader" id="genLoader"></div>
+            </button>
+            <div class="result-box" id="genResult"></div>
+        </div>
+
+        <!-- Detector Card -->
+        <div class="card">
+            <h2>🔍 Detect Credibility</h2>
+            <div class="form-group">
+                <textarea id="detectInput"
+                    placeholder="Paste a paragraph, news link text, or claim to verify its authenticity..."></textarea>
+            </div>
+            <button id="detectBtn" onclick="detectNews()">
+                <span id="detBtnText">Analyze Source</span>
+                <div class="loader" id="detLoader"></div>
+            </button>
+            <div class="result-box" id="detResult"></div>
+        </div>
+    </div>
+
+    <script>
+        async function generateNews() {
+            const prompt = document.getElementById('promptInput').value.trim();
+            if (!prompt) {
+                alert('Please enter a starting phrase or prompt.');
+                return;
+            }
+
+            const btnText = document.getElementById('genBtnText');
+            const loader = document.getElementById('genLoader');
+            const resultBox = document.getElementById('genResult');
+
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            resultBox.classList.remove('active');
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    resultBox.innerHTML = `<span class="error-msg">${data.error}</span>`;
+                } else {
+                    resultBox.textContent = data.result || "Generation complete, no content returned.";
+                }
+                resultBox.classList.add('active');
+            } catch (err) {
+                resultBox.innerHTML = `<span class="error-msg">Error connecting to server. Is the backend running?</span>`;
+                resultBox.classList.add('active');
+            } finally {
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+            }
+        }
+
+        async function detectNews() {
+            const text = document.getElementById('detectInput').value.trim();
+            if (!text) {
+                alert('Please enter some text to analyze.');
+                return;
+            }
+
+            const btnText = document.getElementById('detBtnText');
+            const loader = document.getElementById('detLoader');
+            const resultBox = document.getElementById('detResult');
+
+            btnText.style.display = 'none';
+            loader.style.display = 'block';
+            resultBox.classList.remove('active');
+
+            try {
+                const response = await fetch('/api/detect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await response.json();
+
+                if (data.error) {
+                    resultBox.innerHTML = `<span class="error-msg">${data.error}</span>`;
+                } else {
+                    let resHtml = data.result || "Analysis failed.";
+                    // Emphasize the output based on result
+                    if (resHtml.includes('Fake News')) {
+                        resHtml = `<span class="fake-label">${resHtml}</span>`;
+                    } else if (resHtml.includes('Real News')) {
+                        resHtml = `<span class="real-label">${resHtml}</span>`;
+                    }
+                    resultBox.innerHTML = resHtml;
+                }
+                resultBox.classList.add('active');
+            } catch (err) {
+                resultBox.innerHTML = `<span class="error-msg">Error connecting to server. Is the backend running?</span>`;
+                resultBox.classList.add('active');
+            } finally {
+                btnText.style.display = 'block';
+                loader.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
