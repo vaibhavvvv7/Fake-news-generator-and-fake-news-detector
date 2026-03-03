@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Credible News</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --primary: #10b981;
+            /* Emerald Green */
+            --secondary: #3b82f6;
+            /* Blue */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.5rem;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.15), transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            margin-top: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.5rem;
+        }
+
+        .card p {
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+        }
+
+        .tech-item h3 {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .tech-item p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 768px) {
+            .home-btn {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .header {
+                margin-top: 4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="/" class="home-btn">
+        ← Back to Studio
+    </a>
+
+    <div class="header">
+        <h1>About the Project</h1>
+        <p>The technology behind the intelligence</p>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>The Mission</h2>
+            <p>
+                <strong>Credible News</strong> is an AI-powered platform designed to demonstrate the dual capabilities
+                of modern foundational models: the ability to generate highly realistic synthetic text, and the ability
+                to detect patterns indicative of artificially fabricated or deceptive content.
+            </p>
+            <p>
+                By combining generative and discriminative AI into a single interface, this tool serves as both a
+                creative
+                exploration space and a powerful verification utility against the spread of misinformation.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>AI Models</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>GPT-2</h3>
+                    <p>Powering the <strong>Fiction Generator</strong>. An autoregressive language model created by
+                        OpenAI that predicts the next word in a sequence to generate coherent human-like text.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>BERT Base Uncased</h3>
+                    <p>Powering the <strong>Credibility Detector</strong>. A transformer-based model developed by
+                        Google, fine-tuned for sequence classification to predict whether text is real or fake.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <h3>Python</h3>
+                    <p>The core programming language driving the machine learning inference and backend logic.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>FastAPI</h3>
+                    <p>A modern, highly performant web framework for building the APIs that bridge the frontend to the
+                        AI models.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>PyTorch & Transformers</h3>
+                    <p>Hugging Face's Transformers library and PyTorch provide the deep learning infrastructure required
+                        to run the heavy AI models locally.</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Vanilla Web (HTML/CSS/JS)</h3>
+                    <p>The frontend is built without heavy frameworks to ensure maximum speed, utilizing modern CSS
+                        features like glassmorphism and variables.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
